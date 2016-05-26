@@ -1,0 +1,57 @@
+Arduboy arduboy;
+
+#define FRAMES_PER_SECOND 30
+#define FRAC_BITS 6
+#define spotX 10
+#define spotY 10
+
+void setup()
+{
+  arduboy.begin();
+  arduboy.setFrameRate(FRAMES_PER_SECOND);
+  delay(500);
+  arduboy.setCursor(cSpotX,cSpotY);
+  arduboy.display();
+}
+
+void loop()
+{
+  if(drawButtons)
+  {
+    drawing(spotX, spotY);
+  }
+   
+  if(moveButtons)
+  {
+    move();
+  }
+}
+
+boolean drawButtons()
+{
+  return (arduboy.buttonsState() & (A_BUTTON | B_BUTTON)) != 0;
+}
+  
+boolean moveButtons()
+{
+  return (arduboy.buttonsState() & (UP_BUTTON | DOWN_BUTTON | LEFT_BUTTON | RIGHT_BUTTON)) != 0;
+}
+  
+void move()
+{
+  if((arduboy.buttonsState() & (UP_BUTTON)) != 0)
+    spotY++;
+  else if((arduboy.buttonsState() & (DOWN_BUTTON)) != 0)
+    spotY--;
+  else if((arduboy.buttonsState() & (LEFT_BUTTON)) != 0)
+    spotX--;
+  else if((arduboy.buttonsState() & (RIGHT_BUTTON)) != 0)
+    spotX++;
+  arduboy.setCursor(cSpotX, cSpotY);
+}
+  
+void drawing(int x, int y)
+{
+  void drawPixel(int x, int y, uint8_t color);
+  void display();
+}
